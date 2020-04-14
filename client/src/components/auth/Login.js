@@ -5,10 +5,6 @@ import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
 import classnames from "classnames";
 
-import Typography from '@material-ui/core/Typography'
-
-import { GoogleLoginButton } from '../buttons/GoogleLoginButton'
-import { FacebookLoginButton } from '../buttons/FacebookLoginButton'
 class Login extends Component {
     constructor() {
         super();
@@ -115,15 +111,6 @@ class Login extends Component {
                                 >
                                     Login
                                 </button>
-                                <br></br>
-                                <br></br>
-                                <br></br>
-                                <br></br>
-                                <Typography variant="overline" display="block" gutterBottom>
-                                    Social Login Providers
-                                </Typography>
-                                <GoogleLoginButton />
-                                <FacebookLoginButton />
                             </div>
                         </form>
                     </div>

@@ -5,11 +5,6 @@ import { connect } from "react-redux";
 import { registerUser } from "../../actions/authActions";
 import classnames from "classnames";
 
-import Typography from '@material-ui/core/Typography'
-
-import { GoogleLoginButton } from '../buttons/GoogleLoginButton'
-import { FacebookLoginButton } from '../buttons/FacebookLoginButton'
-
 class Register extends Component {
     constructor() {
         super();
@@ -154,15 +149,6 @@ class Register extends Component {
                                 >
                                 Sign up
                                 </button>
-                                <br></br>
-                                <br></br>
-                                <br></br>
-                                <br></br>
-                                <Typography variant="overline" display="block" gutterBottom>
-                                Or, Register and Login with Social Login Providers
-                                </Typography>
-                                <GoogleLoginButton />
-                                <FacebookLoginButton />
                             </div>
                         </form>
                     </div>
