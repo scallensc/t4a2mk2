@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
@@ -52,6 +54,7 @@ router.post("/register", (req, res) => {
 router.post("/login", (req, res) => {
 
     console.log('Login endpoint receiving data')
+    console.log(req.params)
 
     // Form validation
     const { errors, isValid } = validateLoginInput(req.body);
@@ -81,11 +84,13 @@ router.post("/login", (req, res) => {
                 // Sign token
                 jwt.sign(
                     payload,
-                    keys.secretOrKey,
+                    process.env.JWT_SECRET,
                     {
                         expiresIn: 604800 // 7 days
                     },
                     (err, token) => {
+                        console.log(token);
+                        console.log(err);
                         res.json({
                             success: true,
                             token: "Bearer " + token
