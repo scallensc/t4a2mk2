@@ -7,8 +7,8 @@ class Landing extends Component {
                 <div className="row">
                     <div className="col s12 center-align">
                         <h4>
-                            <b>Build</b> Forum app: {" "}
-                            <span style={{ fontFamily: "monospace" }}>Audioboard</span>
+                            <b>Audioboard:</b> Forum app {" "}
+                            <span style={{ fontFamily: "monospace" }}></span>
                         </h4>
                         <p className="flow-text grey-text text-darken-1">
                             A place for audio professionals and enthusiasts
