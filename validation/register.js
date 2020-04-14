@@ -5,8 +5,8 @@ module.exports = function validateRegisterInput(data) {
     let errors = {};
     
     // If field is empty, make an empty string for validator functions
-    data.firstName = !isEmpty(data.firstName) ? data.name : "";
-    data.lastName = !isEmpty(data.lastName) ? data.name : "";
+    data.firstName = !isEmpty(data.firstName) ? data.firstName : "";
+    data.lastName = !isEmpty(data.lastName) ? data.lastName : "";
     data.email = !isEmpty(data.email) ? data.email : "";
     data.password = !isEmpty(data.password) ? data.password : "";
     data.password2 = !isEmpty(data.password2) ? data.password2 : "";
