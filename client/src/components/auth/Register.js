@@ -4,17 +4,32 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { registerUser } from "../../actions/authActions";
 import classnames from "classnames";
+
+import Typography from '@material-ui/core/Typography'
+
+import { GoogleLoginButton } from '../buttons/GoogleLoginButton'
+import { FacebookLoginButton } from '../buttons/FacebookLoginButton'
+
 class Register extends Component {
     constructor() {
         super();
         this.state = {
-            name: "",
+            firstName: "",
+            lastName: "",
             email: "",
             password: "",
             password2: "",
             errors: {}
         };
     }
+
+    componentDidMount() {
+        // Redirect logged in user to dashboard from register link
+        if (this.props.auth.isAuthenticated) {
+            this.props.history.push("/dashboard");
+        }
+    }
+
     componentWillReceiveProps(nextProps) {
         if (nextProps.errors) {
             this.setState({
@@ -25,16 +40,19 @@ class Register extends Component {
     onChange = e => {
         this.setState({ [e.target.id]: e.target.value });
     };
+
     onSubmit = e => {
         e.preventDefault();
         const newUser = {
-            name: this.state.name,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
             email: this.state.email,
             password: this.state.password,
             password2: this.state.password2
         };
         this.props.registerUser(newUser, this.props.history);
     };
+
     render() {
         const { errors } = this.state;
         return (
@@ -56,16 +74,30 @@ class Register extends Component {
                             <div className="input-field col s12">
                                 <input
                                     onChange={this.onChange}
-                                    value={this.state.name}
-                                    error={errors.name}
-                                    id="name"
+                                    value={this.state.firstName}
+                                    error={errors.firstName}
+                                    id="firstName"
                                     type="text"
                                     className={classnames("", {
-                                        invalid: errors.name
+                                        invalid: errors.firstName
                                     })}
                                 />
-                                <label htmlFor="name">Name</label>
-                                <span className="red-text">{errors.name}</span>
+                                <label htmlFor="firstName">First Name</label>
+                                <span className="red-text">{errors.firstName}</span>
+                            </div>
+                                <div className="input-field col s12">
+                                <input
+                                    onChange={this.onChange}
+                                    value={this.state.lastName}
+                                    error={errors.lastName}
+                                    id="lastName"
+                                    type="text"
+                                    className={classnames("", {
+                                        invalid: errors.lastName
+                                    })}
+                                />
+                                <label htmlFor="lastName">Last Name</label>
+                                <span className="red-text">{errors.lastName}</span>
                             </div>
                             <div className="input-field col s12">
                                 <input
@@ -119,9 +151,18 @@ class Register extends Component {
                                     }}
                                     type="submit"
                                     className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-                                    >
-                                    Sign up
+                                >
+                                Sign up
                                 </button>
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                                <Typography variant="overline" display="block" gutterBottom>
+                                Or, Register and Login with Social Login Providers
+                                </Typography>
+                                <GoogleLoginButton />
+                                <FacebookLoginButton />
                             </div>
                         </form>
                     </div>
@@ -130,15 +171,18 @@ class Register extends Component {
         );
     }
 }
+
 Register.propTypes = {
     registerUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 };
+
 const mapStateToProps = state => ({
     auth: state.auth,
     errors: state.errors
 });
+
 export default connect(
     mapStateToProps,
     { registerUser }

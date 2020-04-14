@@ -16,7 +16,7 @@ import Dashboard from "./components/dashboard/Dashboard";
 if (localStorage.jwtToken) {
   
   // Set auth token header auth
-  const token = localStorage.jwtToken;
+  const token = JSON.parse(localStorage.jwtToken);
   setAuthToken(token);
   
   // Decode token and get user info and exp

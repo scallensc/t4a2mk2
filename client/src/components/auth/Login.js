@@ -4,6 +4,11 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
 import classnames from "classnames";
+
+import Typography from '@material-ui/core/Typography'
+
+import { GoogleLoginButton } from '../buttons/GoogleLoginButton'
+import { FacebookLoginButton } from '../buttons/FacebookLoginButton'
 class Login extends Component {
     constructor() {
         super();
@@ -13,6 +18,14 @@ class Login extends Component {
             errors: {}
         };
     }
+    
+    componentDidMount() {
+        // Redirect logged in user to dashboard from login link
+        if (this.props.auth.isAuthenticated) {
+            this.props.history.push("/dashboard");
+        }
+    }
+
     componentWillReceiveProps(nextProps) {
         if (nextProps.auth.isAuthenticated) {
             this.props.history.push("/dashboard"); // push user to dashboard when they login
@@ -23,9 +36,11 @@ class Login extends Component {
             });
         }
     }
+
     onChange = e => {
         this.setState({ [e.target.id]: e.target.value });
     };
+
     onSubmit = e => {
         e.preventDefault();
         const userData = {
@@ -34,6 +49,7 @@ class Login extends Component {
         };
         this.props.loginUser(userData); // handle the redirect within component
     };
+
     render() {
         const { errors } = this.state;
         return (
@@ -97,8 +113,17 @@ class Login extends Component {
                                     type="submit"
                                     className="btn btn-large waves-effect waves-light hoverable blue accent-3"
                                 >
-                                Login
+                                    Login
                                 </button>
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                                <Typography variant="overline" display="block" gutterBottom>
+                                Social Login Providers
+                                </Typography>
+                                <GoogleLoginButton />
+                                <FacebookLoginButton />
                             </div>
                         </form>
                     </div>
@@ -107,15 +132,18 @@ class Login extends Component {
         );
     }
 }
+
 Login.propTypes = {
     loginUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 };
+
 const mapStateToProps = state => ({
     auth: state.auth,
     errors: state.errors
 });
+
 export default connect(
     mapStateToProps,
     { loginUser }
