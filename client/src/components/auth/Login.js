@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
@@ -18,22 +18,16 @@ class Login extends Component {
             errors: {}
         };
     }
-    
-    componentDidMount() {
-        // Redirect logged in user to dashboard from login link
-        if (this.props.auth.isAuthenticated) {
-            this.props.history.push("/dashboard");
-        }
+
+    static getDerivedStateFromProps(props, state) {
+        return props.errors ? { errors: props.errors } : null
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.auth.isAuthenticated) {
-            this.props.history.push("/dashboard"); // push user to dashboard when they login
-        }
-        if (nextProps.errors) {
-            this.setState({
-                errors: nextProps.errors
-            });
+    componentDidUpdate(prevProps) {
+        const { isAuthenticated } = this.props.auth;
+
+        if (prevProps.auth.isAuthenticated !== isAuthenticated) {
+            this.props.history.push("/dashboard");
         }
     }
 
@@ -120,7 +114,7 @@ class Login extends Component {
                                 <br></br>
                                 <br></br>
                                 <Typography variant="overline" display="block" gutterBottom>
-                                Social Login Providers
+                                    Social Login Providers
                                 </Typography>
                                 <GoogleLoginButton />
                                 <FacebookLoginButton />
@@ -144,7 +138,7 @@ const mapStateToProps = state => ({
     errors: state.errors
 });
 
-export default connect(
+export default withRouter(connect(
     mapStateToProps,
     { loginUser }
-)(Login);
+)(Login));

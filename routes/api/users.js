@@ -14,6 +14,8 @@ const User = require("../../models/User");
 //Post route to api/users/register, basic JWT token
 router.post("/register", (req, res) => {
 
+    console.log('Registration endpoint receiving data')
+
     // Form validation
     const { errors, isValid } = validateRegisterInput(req.body);
     
@@ -48,6 +50,9 @@ router.post("/register", (req, res) => {
 
 // Post route to api/users/login, basic JWT token
 router.post("/login", (req, res) => {
+
+    console.log('Login endpoint receiving data')
+
     // Form validation
     const { errors, isValid } = validateLoginInput(req.body);
 
