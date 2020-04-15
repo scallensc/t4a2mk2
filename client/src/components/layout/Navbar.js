@@ -10,8 +10,8 @@ class Navbar extends Component {
                             to="/"
                             className="col s5 brand-logo center black-text"
                             >
-                            <i className="material-icons">music_note</i>
-                            Audioboard
+                            <i className="material-icons">headset</i>
+                            
                         </Link>
                     </div>
                 </nav>
