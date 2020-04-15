@@ -25,14 +25,14 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 
 // Passport config
-require("./config/passport");
+require("./config/passport")(passport);
 
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 // Routes
 app.use("/api/users", users);
-app.use("/api/forum", forum);
+app.use("/api/forum", passport.authenticate('jwt'), forum);
 
 db.sequelize.sync({ force: false });
 

@@ -1,7 +1,9 @@
 require('dotenv').config()
-const JwtStrategy = require("passport-jwt").Strategy;
+const passport = require("passport")
+const JWTstrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 const db = require("../sequelize");
+const User = db.User
 // Switched out mongo for SQL
 // const User = mongoose.model("users");
 const opts = {};
@@ -11,15 +13,36 @@ opts.secretOrKey = process.env.JWT_SECRET;
 
 module.exports = passport => {
     passport.use(
-        new JwtStrategy(opts, (jwt_payload, done) => {
-            db.User.findById(jwt_payload.id)
-                .then(user => {
+        new JWTstrategy(opts, (jwt_payload, done) => {
+            try {
+                User.findOne({
+                    where: {
+                        id: jwt_payload.id
+                    },
+                }).then(user => {
                     if (user) {
-                        return done(null, user);
+                        console.log('user found in db in passport');
+                        done(null, user);
+                    } else {
+                        console.log('user not found in db');
+                        done(null, false);
                     }
-                    return done(null, false);
-                })
-                .catch(err => console.log(err));
-        })
-    );
+                });
+            } catch (err) {
+                done(err);
+            }
+        }),
+    )
 };
+
+passport.serializeUser(function (user, done) {
+    //place user's id in cookie
+    done(null, user.id);
+});
+
+passport.deserializeUser(function (id, done) {
+    //retrieve user from database by id
+    User.findByPk(id, function (err, user) {
+        done(err, user);
+    });
+});
