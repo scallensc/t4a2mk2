@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
@@ -21,6 +22,9 @@ class Dashboard extends Component {
                                 <span style={{ fontFamily: "monospace" }}>Audioboard</span>
                             </p>
                         </h4>
+                        <li>
+                        <Link to="/topics">Topics</Link>
+                        </li>
                         <button
                             style={{
                                 width: "150px",

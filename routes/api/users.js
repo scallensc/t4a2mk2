@@ -16,7 +16,7 @@ const User = db.User
 
 // Post route to api/users/register, basic JWT token
 router.post("/register", (req, res) => {
-
+    console.log('From routes/api/users.js')
     console.log('Registration endpoint receiving data')
     console.log('Headers: ', req.headers)
     console.log('Request body: ', req.body)
@@ -31,6 +31,7 @@ router.post("/register", (req, res) => {
 
     // Check db for account already registered to given email address
     db.User.findOne({ where: {email: req.body.email }}).then(user => {
+        console.log('From routes/api/users.js')
         console.log(user);
         if (user) {
             return res.status(400).json({ email: "Email already exists" });
@@ -57,9 +58,10 @@ router.post("/register", (req, res) => {
 
 // Post route to api/users/login, basic JWT token
 router.post("/login", (req, res) => {
-
+    console.log('From routes/api/users.js')
     console.log('Login endpoint receiving data')
     console.log(req.headers)
+    console.log(req.body)
 
     // Form validation
     const { errors, isValid } = validateLoginInput(req.body);
@@ -76,6 +78,7 @@ router.post("/login", (req, res) => {
 
         // Check if user exists by searching for email in db
         if (!user) {
+            console.log('From routes/api/users.js')
             console.log('Email not found')
             return res.status(404).json({ emailnotfound: "Email not found" });
         }
@@ -90,6 +93,8 @@ router.post("/login", (req, res) => {
                     id: user.id,
                     email: user.email
                 };
+                console.log('From routes/api/users.js')
+                console.log('Payload: ', payload)
 
                 // Sign token
                 jwt.sign(
@@ -103,7 +108,9 @@ router.post("/login", (req, res) => {
                         res.json({
                             success: true,
                             token: token
-                        }); console.log(jwt_decode(token))
+                        }); 
+                        console.log('From routes/api/users.js')
+                        console.log('Token: ', jwt_decode(token))
                     } 
                 );
             } else {
