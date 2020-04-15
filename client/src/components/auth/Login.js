@@ -140,7 +140,7 @@ const mapStateToProps = state => ({
     errors: state.errors
 });
 
-export default withRouter(connect(
+export default connect(
     mapStateToProps,
     { loginUser }
-)(Login));
+)(withRouter(Login));

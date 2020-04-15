@@ -25,8 +25,13 @@ class Register extends Component {
         }
     }
 
-    // Populate state for errors to be displayed in form on submission
-    componentWillReceiveProps(nextProps) {
+    // Redirect to dashboard on successful login
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        if (nextProps.auth.isAuthenticated) {
+            this.props.history.push("/dashboard");
+        }
+
+        // Populate state for errors to be displayed in form on submission
         if (nextProps.errors) {
             this.setState({
                 errors: nextProps.errors

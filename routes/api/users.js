@@ -25,7 +25,7 @@ router.post("/register", (req, res) => {
     
     // Check validation
     if (!isValid) {
-        return re.status(400).json(errors);
+        return res.status(400).json(errors);
     }
 
     // Check db for account already registered to given email address
@@ -76,6 +76,7 @@ router.post("/login", (req, res) => {
 
         // Check if user exists by searching for email in db
         if (!user) {
+            console.log('Email not found')
             return res.status(404).json({ emailnotfound: "Email not found" });
         }
 
