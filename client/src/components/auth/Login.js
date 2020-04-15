@@ -16,16 +16,20 @@ class Login extends Component {
     }
 
     componentDidMount() {
-        // Redirect logged in user to dashboard from login link
+
+        // Check if user is already authenticated when vising login link, and if so, redirect to a dashboard
         if (this.props.auth.isAuthenticated) {
             this.props.history.push("/dashboard");
         }
     }
 
+    // Redirect to dashboard on successful login
     componentWillReceiveProps(nextProps) {
         if (nextProps.auth.isAuthenticated) {
-            this.props.history.push("/dashboard"); // push user to dashboard when they login
+            this.props.history.push("/dashboard");
         }
+
+        // Populate state for errors to be displayed in form on submission
         if (nextProps.errors) {
             this.setState({
                 errors: nextProps.errors
@@ -33,19 +37,24 @@ class Login extends Component {
         }
     }
 
+    // Set state for each paramater of user info as being entered
     onChange = e => {
         this.setState({ [e.target.id]: e.target.value });
     };
 
+    // Disallow submission of blank form, take state of information entered for submission with registerUser route
     onSubmit = e => {
         e.preventDefault();
         const userData = {
             email: this.state.email,
             password: this.state.password
         };
-        this.props.loginUser(userData); // handle the redirect within component
+        
+        // Handle the login redirect within component
+        this.props.loginUser(userData);
     };
 
+    // Render login form
     render() {
         const { errors } = this.state;
         return (

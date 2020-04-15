@@ -11,7 +11,9 @@ import {
 export const registerUser = (userData, history) => dispatch => {
     axios
         .post("http://localhost:5000/api/users/register", userData)
-        .then(res => history.push("/login")) // re-direct to login on successful register
+        
+        // Redirect to login after succesful registration
+        .then(res => history.push("/login"))
         .catch(err =>
             dispatch({
                 type: GET_ERRORS,
@@ -73,6 +75,6 @@ export const logoutUser = () => dispatch => {
     // Remove auth header for future requests
     setAuthToken(false);
     
-    // Set current user to empty object {} which will set isAuthenticated to false
+    // Set current user to empty object {} to remove authentication
     dispatch(setCurrentUser({}));
 };

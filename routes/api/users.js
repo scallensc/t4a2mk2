@@ -1,5 +1,6 @@
 require('dotenv').config()
 
+const jwt_decode = require("jwt-decode")
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
@@ -13,18 +14,21 @@ const validateLoginInput = require("../../validation/login");
 // Load User model
 const User = require("../../models/User");
 
-//Post route to api/users/register, basic JWT token
+// Post route to api/users/register, basic JWT token
 router.post("/register", (req, res) => {
 
     console.log('Registration endpoint receiving data')
+    console.log(req.headers)
 
     // Form validation
     const { errors, isValid } = validateRegisterInput(req.body);
     
     // Check validation
     if (!isValid) {
-        return res.status(400).json(errors);
+        return re.status(400).json(errors);
     }
+
+    // Check db for account already registered to given email address
     User.findOne({ email: req.body.email }).then(user => {
         if (user) {
             return res.status(400).json({ email: "Email already exists" });
@@ -35,6 +39,7 @@ router.post("/register", (req, res) => {
                 email: req.body.email,
                 password: req.body.password
             });
+
             // Hash password before saving in database
             bcrypt.genSalt(10, (err, salt) => {
                 bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -54,7 +59,7 @@ router.post("/register", (req, res) => {
 router.post("/login", (req, res) => {
 
     console.log('Login endpoint receiving data')
-    console.log(req.params)
+    console.log(req.headers)
 
     // Form validation
     const { errors, isValid } = validateLoginInput(req.body);
@@ -68,36 +73,41 @@ router.post("/login", (req, res) => {
 
     // Find user by email
     User.findOne({ email }).then(user => {
-        // Check if user exists
+
+        // Check if user exists by searching for email in db
         if (!user) {
             return res.status(404).json({ emailnotfound: "Email not found" });
         }
+
         // Check password
         bcrypt.compare(password, user.password).then(isMatch => {
             if (isMatch) {
+
                 // User matched
                 // Create JWT Payload
                 const payload = {
                     id: user.id,
-                    name: user.name
+                    email: user.email
                 };
+
                 // Sign token
                 jwt.sign(
                     payload,
                     process.env.JWT_SECRET,
                     {
-                        expiresIn: 604800 // 7 days
+                        expiresIn: 604800 // set expiry for 7 days
                     },
                     (err, token) => {
                         console.log(token);
-                        console.log(err);
                         res.json({
                             success: true,
-                            token: "Bearer " + token
-                        });
-                    }
+                            token: token
+                        }); console.log(jwt_decode(token))
+                    } 
                 );
             } else {
+
+                // Return password mismatch
                 return res
                     .status(400)
                     .json({ passwordincorrect: "Password incorrect" });
