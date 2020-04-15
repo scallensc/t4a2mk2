@@ -2,8 +2,8 @@ require('dotenv').config()
 
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
-const mongoose = require("mongoose");
-const User = mongoose.model("users");
+const db = require("../sequelize");
+// const User = mongoose.model("users");
 const opts = {};
 
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
@@ -12,7 +12,7 @@ opts.secretOrKey = process.env.JWT_SECRET;
 module.exports = passport => {
     passport.use(
         new JwtStrategy(opts, (jwt_payload, done) => {
-            User.findById(jwt_payload.id)
+            db.User.findById(jwt_payload.id)
                 .then(user => {
                     if (user) {
                         return done(null, user);

@@ -11,13 +11,15 @@ const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 
 // Load User model
-const User = require("../../models/User");
+const db = require("../../sequelize");
+const User = db.User
 
 // Post route to api/users/register, basic JWT token
 router.post("/register", (req, res) => {
 
     console.log('Registration endpoint receiving data')
-    console.log(req.headers)
+    console.log('Headers: ', req.headers)
+    console.log('Request body: ', req.body)
 
     // Form validation
     const { errors, isValid } = validateRegisterInput(req.body);
@@ -28,26 +30,25 @@ router.post("/register", (req, res) => {
     }
 
     // Check db for account already registered to given email address
-    User.findOne({ email: req.body.email }).then(user => {
+    db.User.findOne({ where: {email: req.body.email }}).then(user => {
+        console.log(user);
         if (user) {
             return res.status(400).json({ email: "Email already exists" });
         } else {
-            const newUser = new User({
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
-                email: req.body.email,
-                password: req.body.password
-            });
-
             // Hash password before saving in database
             bcrypt.genSalt(10, (err, salt) => {
-                bcrypt.hash(newUser.password, salt, (err, hash) => {
+                bcrypt.hash(req.body.password, salt, (err, hash) => {
                     if (err) throw err;
-                    newUser.password = hash;
-                    newUser
-                        .save()
-                        .then(user => res.json(user))
-                        .catch(err => console.log(err));
+                    db.User.create({
+                        firstName: req.body.firstName,
+                        lastName: req.body.lastName,
+                        email: req.body.email,
+                        password: hash
+                    }).then(result => {
+                        console.log(result);
+                        res.json(result)
+                        return;
+                    });
                 });
             });
         }
@@ -71,7 +72,7 @@ router.post("/login", (req, res) => {
     const password = req.body.password;
 
     // Find user by email
-    User.findOne({ email }).then(user => {
+    User.findOne({ where: {email: req.body.email }}).then(user => {
 
         // Check if user exists by searching for email in db
         if (!user) {
