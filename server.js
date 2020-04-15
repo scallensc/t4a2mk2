@@ -44,6 +44,7 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 // Routes
 app.use("/api/users", users);
 
+// Redirect catch all
 app.get('*', (req,res) =>{
     res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
