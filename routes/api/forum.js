@@ -46,7 +46,7 @@ router.post("/thread", (req, res) => {
 // Comment creation route
 router.post("/comment", (req, res) => {
     console.log('hitting post route for comment')
-    if (!req.body.text || !req.body.user || !req.body.topic || !req.body.thread) {
+    if (!req.body.text || !req.body.user || !req.body.thread) {
         console.log('Post comment failed, incomplete post data')
         return res.status(400).json({ error: "Incomplete post data" });
     } else {
