@@ -7,11 +7,42 @@ const sequelize = db.sequelize;
 
 // Topic creation route, this will be removed for production
 router.post("/topic", (req, res) => {
-    console.log('hitting post route')
+    console.log('hitting post route for topic')
     db.Topic.create({
         name: req.body.name,
     }).then(result => {
         console.log('From routes/api/forum.js', '/topic post: ')
+        console.log(result)
+        res.json(result);
+        return;
+    });
+});
+
+// Thread creation route
+router.post("/thread", (req, res) => {
+    console.log('hitting post route for thread')
+    db.Thread.create({
+        name: req.body.name,
+        UserId: req.body.user,
+        TopicId: req.body.topic,
+    }).then(result => {
+        console.log('From routes/api/forum.js', '/thread post: ')
+        console.log(result)
+        res.json(result);
+        return;
+    });
+});
+
+// Comment creation route
+router.post("/comment", (req, res) => {
+    console.log('hitting post route for comment')
+    db.Comment.create({
+        text: req.body.text,
+        UserId: req.body.user,
+        TopicId: req.body.topic,
+        ThreadId: req.body.thread,
+    }).then(result => {
+        console.log('From routes/api/forum.js', '/comment post: ')
         console.log(result)
         res.json(result);
         return;
