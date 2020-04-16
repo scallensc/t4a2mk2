@@ -1,6 +1,23 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { loginUser } from "../../actions/authActions";
 class Landing extends Component {
+    componentDidMount() {
+
+        // Check if user is already authenticated when vising login link, and if so, redirect to a dashboard
+        if (this.props.auth.isAuthenticated) {
+            this.props.history.push("/dashboard");
+        }
+    }
+
+    // Redirect to dashboard on successful login
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.auth.isAuthenticated) {
+            this.props.history.push("/dashboard");
+        }
+    }
     render() {
         return (
             <div style={{ height: "75vh" }} className="container valign-wrapper">
@@ -46,4 +63,19 @@ class Landing extends Component {
         );
     }
 }
-export default Landing;
+
+Landing.propTypes = {
+    loginUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+    auth: state.auth,
+    errors: state.errors
+});
+
+export default connect(
+    mapStateToProps,
+    { loginUser }
+)(withRouter(Landing));
