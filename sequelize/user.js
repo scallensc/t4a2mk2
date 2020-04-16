@@ -17,7 +17,8 @@ module.exports = (sequelize, DataTypes) => {
     delete values.password;
     delete values.createdAt;
     delete values.updatedAt;
-
+    console.log('tojson output');
+    console.log(values);
     return values;
   }
   return User;

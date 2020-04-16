@@ -22,6 +22,7 @@ module.exports = passport => {
                 }).then(user => {
                     if (user) {
                         console.log('user found in db in passport');
+                        console.log(user)
                         done(null, user);
                     } else {
                         console.log('user not found in db');
