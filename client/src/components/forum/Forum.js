@@ -5,7 +5,7 @@ import Topics from "./pages/Topics"
 class Forum extends Component {
     render() {
         return (
-            <div class="container">
+            <div class="row">
                 <Topics />
             </div>
         )

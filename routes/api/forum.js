@@ -74,12 +74,15 @@ router.get('/topics', (req, res) => {
     db.Topic.findAll({
         attributes: [
             'id', 'name',
-            [sequelize.fn('count', sequelize.col('Threads.id')), 'thread_count']
+            [sequelize.fn('count', sequelize.col('Threads.id')), 'thread_count' ]
         ],
         include: [
             {
                 model: db.Thread,
-                attributes: []
+                attributes: [
+                    
+                [ sequelize.fn("max", sequelize.col('Threads.updatedAt')), 'last_up' ],
+                ],
             }
         ],
         group: ['Topic.id']
