@@ -5,6 +5,7 @@ const router = express.Router();
 const db = require("../../sequelize");
 const sequelize = db.sequelize;
 
+// Topic creation route, this will be removed for production
 router.post("/topic", (req, res) => {
     console.log('hitting post route')
     db.Topic.create({
@@ -17,17 +18,7 @@ router.post("/topic", (req, res) => {
     });
 });
 
-// router.post('/topic'), (req, res) => {
-//     console.log('create post request')
-//     db.Topic.create({
-//         name: req.body.name,
-//     }).then(result => {
-//         console.log(result);
-//         res.json(result)
-//         return;
-//     });
-// };
-
+// Get route to list available topics and threads
 router.get('/topics', (req, res) => {
     db.Topic.findAll({
         attributes: [
@@ -49,6 +40,7 @@ router.get('/topics', (req, res) => {
     });
 })
 
+// Get route for specific topic
 router.get('/topic/:id?', (req, res) => {
     db.Topic.findOne({
         where: {
@@ -77,6 +69,7 @@ router.get('/topic/:id?', (req, res) => {
     });
 });
 
+// Get route for specific thread
 router.get('/thread/:id?', (req, res) => {
     db.Thread.findOne({
         where: {
