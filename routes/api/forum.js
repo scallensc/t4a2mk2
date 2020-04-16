@@ -70,6 +70,7 @@ router.post("/comment", (req, res) => {
 
 // Get route to list available topics and threads
 router.get('/topics', (req, res) => {
+    console.log('Attempt being made to retrieve topics')
     db.Topic.findAll({
         attributes: [
             'id', 'name',
