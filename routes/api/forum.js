@@ -8,45 +8,60 @@ const sequelize = db.sequelize;
 // Topic creation route, this will be removed for production
 router.post("/topic", (req, res) => {
     console.log('hitting post route for topic')
-    db.Topic.create({
-        name: req.body.name,
-    }).then(result => {
-        console.log('From routes/api/forum.js', '/topic post: ')
-        console.log(result)
-        res.json(result);
-        return;
-    });
-});
+    if (!req.body.name || !req.body.user || !req.body.topic) {
+        console.log("Post comment failed, incomplete post data")
+        return res.status(400).json({ error: "Incomplete post data" });
+    } else {
+        db.Topic.create({
+            name: req.body.name,
+        }).then(result => {
+            console.log('From routes/api/forum.js', '/topic post: ')
+            console.log(result)
+            res.json(result);
+            return;
+        });
+    }
+})
 
 // Thread creation route
 router.post("/thread", (req, res) => {
     console.log('hitting post route for thread')
-    db.Thread.create({
-        name: req.body.name,
-        UserId: req.body.user,
-        TopicId: req.body.topic,
-    }).then(result => {
-        console.log('From routes/api/forum.js', '/thread post: ')
-        console.log(result)
-        res.json(result);
-        return;
-    });
+    if (!req.body.name || !req.body.user || !req.body.topic) {
+        console.log('Post thread failed, incomplete post data')
+        return res.status(400).json({ error: "Incomplete post data" });
+    } else {
+        db.Thread.create({
+            name: req.body.name,
+            UserId: req.body.user,
+            TopicId: req.body.topic,
+        }).then(result => {
+            console.log('From routes/api/forum.js', '/thread post: ')
+            console.log(result)
+            res.json(result);
+            return;
+        });
+    };
 });
 
 // Comment creation route
 router.post("/comment", (req, res) => {
     console.log('hitting post route for comment')
-    db.Comment.create({
-        text: req.body.text,
-        UserId: req.body.user,
-        TopicId: req.body.topic,
-        ThreadId: req.body.thread,
-    }).then(result => {
-        console.log('From routes/api/forum.js', '/comment post: ')
-        console.log(result)
-        res.json(result);
-        return;
-    });
+    if (!req.body.text || !req.body.user || !req.body.topic || !req.body.thread) {
+        console.log('Post comment failed, incomplete post data')
+        return res.status(400).json({ error: "Incomplete post data" });
+    } else {
+        db.Comment.create({
+            text: req.body.text,
+            UserId: req.body.user,
+            TopicId: req.body.topic,
+            ThreadId: req.body.thread,
+        }).then(result => {
+            console.log('From routes/api/forum.js', '/comment post: ')
+            console.log(result)
+            res.json(result);
+            return;
+        });
+    };
 });
 
 // Get route to list available topics and threads
@@ -69,7 +84,7 @@ router.get('/topics', (req, res) => {
         res.json(result);
         return;
     });
-})
+});
 
 // Get route for specific topic
 router.get('/topic/:id?', (req, res) => {
@@ -117,7 +132,7 @@ router.get('/thread/:id?', (req, res) => {
         console.log(result)
         res.json(result);
         return;
-    })
-})
+    });
+});
 
 module.exports = router;
