@@ -2,7 +2,15 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { LogOutButton } from "../buttons/LogOutButton.jsx"
 import { ForumButton } from "../buttons/ForumButton.jsx"
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logoutUser } from "../../actions/authActions";
 class Dashboard extends Component {
+
+    onLogoutClick = e => {
+        e.preventDefault();
+        this.props.logoutUser();
+    };
 
     render() {
         const { user } = this.props.auth;
@@ -17,12 +25,12 @@ class Dashboard extends Component {
                                 <span style={{ fontFamily: "monospace" }}>Audioboard</span>
                             </p>
                         </h4>
-                        <div>
-                        <LogOutButton/>
+                        <div onClick={this.onLogoutClick}>
+                            <LogOutButton />
                         </div>
                         <div>
-                        <Link to="/forum">
-                        <ForumButton />
+                            <Link to="/forum">
+                                <ForumButton />
                             </Link>
                         </div>
                     </div>
@@ -32,4 +40,18 @@ class Dashboard extends Component {
     }
 }
 
-export default Dashboard
+Dashboard.propTypes = {
+    logoutUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+    auth: state.auth
+});
+
+export default connect(
+    mapStateToProps,
+    { logoutUser }
+)(Dashboard);
+
+export { Dashboard }
