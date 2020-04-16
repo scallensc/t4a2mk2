@@ -53,7 +53,6 @@ router.post("/comment", (req, res) => {
         db.Comment.create({
             text: req.body.text,
             UserId: req.body.user,
-            TopicId: req.body.topic,
             ThreadId: req.body.thread,
         }).then(result => {
             console.log('From routes/api/forum.js', '/comment post: ')
