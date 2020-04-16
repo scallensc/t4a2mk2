@@ -4,8 +4,6 @@ const JWTstrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 const db = require("../sequelize");
 const User = db.User
-// Switched out mongo for SQL
-// const User = mongoose.model("users");
 const opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = process.env.JWT_SECRET;
@@ -44,15 +42,3 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(function (user, done) {
     done(err, user);
 });
-
-// passport.serializeUser(function (user, done) {
-//     //place user's id in cookie
-//     done(null, user.id);
-// });
-
-// passport.deserializeUser(function (id, done) {
-//     //retrieve user from database by id
-//     User.findByPk(id, function (err, user) {
-//         done(err, user);
-//     });
-// });
