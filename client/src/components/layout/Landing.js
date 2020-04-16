@@ -6,18 +6,12 @@ import { loginUser } from "../../actions/authActions";
 class Landing extends Component {
     componentDidMount() {
 
-        // Check if user is already authenticated when vising login link, and if so, redirect to a dashboard
+        // Check if user is already authenticated when landing at site, redirect to dashboard
         if (this.props.auth.isAuthenticated) {
             this.props.history.push("/dashboard");
         }
     }
 
-    // Redirect to dashboard on successful login
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.auth.isAuthenticated) {
-            this.props.history.push("/dashboard");
-        }
-    }
     render() {
         return (
             <div style={{ height: "75vh" }} className="container valign-wrapper">
