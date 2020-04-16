@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
+import { LogOutButton } from "../buttons/LogOutButton.jsx"
+import { ForumButton } from "../buttons/ForumButton.jsx"
 class Dashboard extends Component {
     onLogoutClick = e => {
         e.preventDefault();
@@ -22,21 +24,14 @@ class Dashboard extends Component {
                                 <span style={{ fontFamily: "monospace" }}>Audioboard</span>
                             </p>
                         </h4>
-                        <li>
-                        <Link to="/topics">Topics</Link>
-                        </li>
-                        <button
-                            style={{
-                                width: "150px",
-                                borderRadius: "3px",
-                                letterSpacing: "1.5px",
-                                marginTop: "1rem"
-                            }}
-                            onClick={this.onLogoutClick}
-                            className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-                        >
-                            Logout
-                        </button>
+                        <div onClick={this.onLogoutClick}>
+                        <LogOutButton/>
+                        </div>
+                        <div>
+                        <Link to="/forum">
+                        <ForumButton />
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>
