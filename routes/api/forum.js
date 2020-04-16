@@ -5,7 +5,30 @@ const router = express.Router();
 const db = require("../../sequelize");
 const sequelize = db.sequelize;
 
-router.get('/topics', (req, res) => {    
+router.post("/topic", (req, res) => {
+    console.log('hitting post route')
+    db.Topic.create({
+        name: req.body.name,
+    }).then(result => {
+        console.log('From routes/api/forum.js', '/topic post: ')
+        console.log(result)
+        res.json(result);
+        return;
+    });
+});
+
+// router.post('/topic'), (req, res) => {
+//     console.log('create post request')
+//     db.Topic.create({
+//         name: req.body.name,
+//     }).then(result => {
+//         console.log(result);
+//         res.json(result)
+//         return;
+//     });
+// };
+
+router.get('/topics', (req, res) => {
     db.Topic.findAll({
         attributes: [
             'id', 'name',
@@ -20,6 +43,7 @@ router.get('/topics', (req, res) => {
         group: ['Topic.id']
     }).then(result => {
         console.log('From routes/api/forum.js', '/topics request: ')
+        console.log(result)
         res.json(result);
         return;
     });
@@ -46,7 +70,8 @@ router.get('/topic/:id?', (req, res) => {
         ],
         group: ['Threads.id']
     }).then(result => {
-        console.log('From routes/api/forum.js', '/topic:id? request: ')
+        console.log('From routes/api/forum.js', '/topic/:id? request: ')
+        console.log(result)
         res.json(result);
         return
     });
@@ -65,6 +90,7 @@ router.get('/thread/:id?', (req, res) => {
         }]
     }).then(result => {
         console.log('From routes/api/forum.js', '/thread/:id? request: ')
+        console.log(result)
         res.json(result);
         return;
     })

@@ -40,6 +40,7 @@ router.post("/register", (req, res) => {
             bcrypt.genSalt(10, (err, salt) => {
                 bcrypt.hash(req.body.password, salt, (err, hash) => {
                     if (err) throw err;
+                    // Create user
                     db.User.create({
                         firstName: req.body.firstName,
                         lastName: req.body.lastName,
