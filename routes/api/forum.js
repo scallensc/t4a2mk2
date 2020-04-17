@@ -32,18 +32,14 @@ router.post("/thread", (req, res) => {
     } else {
         db.Thread.create({
             name: req.body.name,
+            body: req.body.body,
             UserId: req.body.user,
             TopicId: req.body.topic,
         }).then(result => {
-            db.Comment.create
-            req.body.user
-            ThreadId: result.id
-            message: req.body.text
-
-                console.log('From routes/api/forum.js', '/thread post: ')
-                console.log(result)
-                res.json(result);
-                return;
+            console.log('From routes/api/forum.js', '/thread post: ')
+            console.log(result)
+            res.json(result);
+            return;
         });
     };
 });
@@ -74,14 +70,14 @@ router.get('/topics', (req, res) => {
     db.Topic.findAll({
         attributes: [
             'id', 'name',
-            [sequelize.fn('count', sequelize.col('Threads.id')), 'thread_count' ]
+            [sequelize.fn('count', sequelize.col('Threads.id')), 'thread_count']
         ],
         include: [
             {
                 model: db.Thread,
                 attributes: [
-                    
-                [ sequelize.fn("max", sequelize.col('Threads.updatedAt')), 'last_up' ],
+
+                    [sequelize.fn("max", sequelize.col('Threads.updatedAt')), 'last_up'],
                 ],
             }
         ],

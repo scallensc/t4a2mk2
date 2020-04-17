@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 class Topics extends Component {
     state = {
-        topics: []
+        topics: [],
     }
     componentDidMount() {
         const url = "/api/forum/topics";
@@ -19,7 +19,7 @@ class Topics extends Component {
     }
 
     render() {
-        const url = "/pages/topic/"
+        const url = "/topic/"
         return (
             <div className="row">
                 <div className="container">
@@ -27,6 +27,8 @@ class Topics extends Component {
                         <h4 align="center" color="white">Forum Topics</h4>
                         <br></br>
                         {this.state.topics.map((topics) => (
+                            // a = topics.Threads[0].last_up = topics.Threads[0].last_up.any() !== null,
+                            // a = topics.thread_count = topics.thread_count.any() !== null),
                             <div className="row" key={`row ${topics.name}`}>
                                 <div className="col s12" key={`col ${topics.name}`}>
                                     <div className="card blue-grey darken-4" key={`card ${topics.name}`} >
@@ -41,12 +43,15 @@ class Topics extends Component {
                                     </div>
                                 </div>
                             </div>
-                        ))}
+                        ))
+                        }
                     </div>
                 </div>
             </div>
         )
     }
 }
+
+
 
 export default Topics;
