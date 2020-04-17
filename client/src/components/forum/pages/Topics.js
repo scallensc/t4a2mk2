@@ -21,24 +21,22 @@ class Topics extends Component {
     render() {
         const url = "/pages/topic/"
         return (
-            <div class="row">
-                <div class="container">
-                    <div class="col s12">
+            <div className="row">
+                <div className="container">
+                    <div className="col s12">
                         <h4 align="center">Forum Topics</h4>
                         <br></br>
                         {this.state.topics.map((topics) => (
-                            <div class="row" border-radius="5">
-                                <div class="col s12 blue-grey lighten-1 z-depth-2" border="5px solid">
-                                    <div class="col s8 blue-grey lighten-1">
-                                        <div class="white-text">
-                                            <h3><span class="text">{topics.name}</span></h3>
-                                            <h4><span class="text"><Link to={url + topics.id}>Enter Here </Link></span></h4>
+                            <div className="row" key={`row ${topics.name}`}>
+                                <div className="col s12" key={`col ${topics.name}`}>
+                                    <div className="card blue-grey darken-1" key={`card ${topics.name}`}>
+                                        <div className="card-content white-text" key={`card-content ${topics.name}`}>
+                                            <span className="card-title" key={topics.name}>{topics.name}</span>
+                                            <p key={topics.thread_count}>{"Threads: " + topics.thread_count}</p>
+                                            <p key={topics.Threads[0].last_up}>{"Last active: " + topics.Threads[0].last_up}</p>
                                         </div>
-                                    </div>
-                                    <div class="col s4 blue-grey lighten-1">
-                                        <div class="white-text" size="32">
-                                            <h3>{"Threads: " + topics.thread_count}</h3>
-                                            <div class="white-text">{"Last active: " + topics.Threads[0].last_up}</div>
+                                        <div className="card-action" key={url + topics.id}>
+                                            <Link to={url + topics.id}>Enter {topics.name} Here </Link>
                                         </div>
                                     </div>
                                 </div>
@@ -50,7 +48,5 @@ class Topics extends Component {
         )
     }
 }
-
-
 
 export default Topics;
