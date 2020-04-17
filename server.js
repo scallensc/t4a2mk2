@@ -11,7 +11,7 @@ const cors = require('cors')
 const db = require("./sequelize");
 
 // Cors middleware
-app.use(cors())
+app.use(cors());
 
 // Bodyparser middleware
 app.use(
