@@ -52,6 +52,4 @@ class Topics extends Component {
     }
 }
 
-
-
 export default Topics;
