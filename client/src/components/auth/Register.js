@@ -74,7 +74,7 @@ class Register extends Component {
                             <h4>
                                 <b>Register</b>
                             </h4>
-                            <p className="grey-text text-darken-1">
+                            <p className="white-text text-darken-1">
                                 Already have an account? <Link to="/login">Log in</Link>
                             </p>
                         </div>
@@ -86,7 +86,7 @@ class Register extends Component {
                                     error={errors.firstName}
                                     id="firstName"
                                     type="text"
-                                    className={classnames("", {
+                                    className={classnames("white-text", {
                                         invalid: errors.firstName
                                     })}
                                 />
@@ -100,7 +100,7 @@ class Register extends Component {
                                     error={errors.lastName}
                                     id="lastName"
                                     type="text"
-                                    className={classnames("", {
+                                    className={classnames("white-text", {
                                         invalid: errors.lastName
                                     })}
                                 />
@@ -114,7 +114,7 @@ class Register extends Component {
                                     error={errors.email}
                                     id="email"
                                     type="email"
-                                    className={classnames("", {
+                                    className={classnames("white-text", {
                                         invalid: errors.email
                                     })}
                                 />
@@ -128,7 +128,7 @@ class Register extends Component {
                                     error={errors.password}
                                     id="password"
                                     type="password"
-                                    className={classnames("", {
+                                    className={classnames("white-text", {
                                         invalid: errors.password
                                     })}
                                 />
@@ -142,7 +142,7 @@ class Register extends Component {
                                     error={errors.password2}
                                     id="password2"
                                     type="password"
-                                    className={classnames("", {
+                                    className={classnames("white-text", {
                                         invalid: errors.password2
                                     })}
                                 />

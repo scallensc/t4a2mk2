@@ -7,7 +7,11 @@ html {
     font-family: GillSans, Calibri, Trebuchet, sans-serif;
 }
 
-.row {
-    border:5px solid #fb1d99;  
-    margin-top:10px; 
+body {
+    background-color: #2C3136;
+}
+
+h4 {
+    color: white;
+    font-family: ;
 }

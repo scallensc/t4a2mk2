@@ -2,39 +2,16 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { loginUser } from "../../actions/authActions";
 import classnames from "classnames";
 
-class Login extends Component {
+class Post extends Component {
     constructor() {
         super();
         this.state = {
-            email: "",
-            password: "",
+            title: "",
+            body: "",
             errors: {}
         };
-    }
-
-    componentDidMount() {
-
-        // Check if user is already authenticated when vising login link, and if so, redirect to a dashboard
-        if (this.props.auth.isAuthenticated) {
-            this.props.history.push("/dashboard");
-        }
-    }
-
-    // Redirect to dashboard on successful login
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.auth.isAuthenticated) {
-            this.props.history.push("/dashboard");
-        }
-
-        // Populate state for errors to be displayed in form on submission
-        if (nextProps.errors) {
-            this.setState({
-                errors: nextProps.errors
-            });
-        }
     }
 
     // Set state for each paramater of user info as being entered
@@ -42,16 +19,16 @@ class Login extends Component {
         this.setState({ [e.target.id]: e.target.value });
     };
 
-    // Disallow submission of blank form, take state of information entered for submission with registerUser route
+    // Disallow submission of blank form, take state of information entered for submission in post
     onSubmit = e => {
         e.preventDefault();
-        const userData = {
-            email: this.state.email,
-            password: this.state.password
+        const postData = {
+            title: this.state.email,
+            body: this.state.password
         };
         
-        // Handle the login redirect within component
-        this.props.loginUser(userData);
+        // Handle the post within component
+        this.props.loginUser(postData);
     };
 
     // Render login form

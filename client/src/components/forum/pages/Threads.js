@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-// import 'materialize-css';
-import { Icon, Button, Card, Row, Col } from 'react-materialize';
+import { Link } from "react-router-dom";
 
 class Threads extends Component {
     state = {
@@ -20,29 +19,34 @@ class Threads extends Component {
     }
 
     render() {
+        const url = "/pages/topic/"
         return (
-            <Row>
+            <div className="row">
                 <div className="container">
-                    <div className="col s12 grey lighten-4 full-width">>
-                    {this.state.topics.map((topics) => (
-                        <Card
-                            actions={[
-                                <a key="1" href="#">Enter here</a>,
-                            ]}
-                            className="grey darken-1"
-                            closeIcon={<Icon>close</Icon>}
-                            revealIcon={<Icon>more_vert</Icon>}
-                            textClassName="white-text"
-                            title={<h4>{topics.name}</h4>}
-                        >
-                            I am a very simple card.
-                        </Card>
-                    ))}
+                    <div className="col s12">
+                        <h4 align="center" color="white">Forum Topics</h4>
+                        <br></br>
+                        {this.state.topics.map((topics) => (
+                            <div className="row" key={`row ${topics.name}`}>
+                                <div className="col s12" key={`col ${topics.name}`}>
+                                    <div className="card blue-grey darken-4" key={`card ${topics.name}`} >
+                                        <div className="card-content white-text" key={`card-content ${topics.name}`}>
+                                            <span className="card-title" key={topics.name}>{topics.name}</span>
+                                            <p key={topics.thread_count}>{"Threads: " + topics.thread_count}</p>
+                                            <p key={topics.Threads[0].last_up}>{"Last active: " + topics.Threads[0].last_up}</p>
+                                        </div>
+                                        <div className="card-action" key={url + topics.id}>
+                                            <Link to={url + topics.id}>Enter {topics.name} Here </Link>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
-            </Row>
+            </div>
         )
     }
-};
+}
 
 export default Threads;

@@ -1,7 +1,8 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Thread = sequelize.define('Thread', {
-    name: DataTypes.STRING
+    name: DataTypes.STRING,
+    body: DataTypes.STRING
   }, {});
   Thread.associate = function(models) {
     // associations can be defined here

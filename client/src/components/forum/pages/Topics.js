@@ -24,12 +24,12 @@ class Topics extends Component {
             <div className="row">
                 <div className="container">
                     <div className="col s12">
-                        <h4 align="center">Forum Topics</h4>
+                        <h4 align="center" color="white">Forum Topics</h4>
                         <br></br>
                         {this.state.topics.map((topics) => (
                             <div className="row" key={`row ${topics.name}`}>
                                 <div className="col s12" key={`col ${topics.name}`}>
-                                    <div className="card blue-grey darken-1" key={`card ${topics.name}`}>
+                                    <div className="card blue-grey darken-4" key={`card ${topics.name}`} >
                                         <div className="card-content white-text" key={`card-content ${topics.name}`}>
                                             <span className="card-title" key={topics.name}>{topics.name}</span>
                                             <p key={topics.thread_count}>{"Threads: " + topics.thread_count}</p>
